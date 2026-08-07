@@ -7,10 +7,10 @@ namespace Academia.Domain.Interfaces
 {
     public interface IPlanRepository
     {
-        Task<Plan> CreatePlan(Plan Plan);
-        Task<Plan> GetAll();
+        Task<Plan> CreatePlan(Plan plan);
+        Task<IEnumerable<Plan>> GetAll();
         Task<Plan> GetById(int id);
-        Task<Plan> Remove(int id);
-        Task<Plan> Update(Plan Plan);
+        Task<bool> Remove(int id);
+        Plan Update(Plan plan);
     }
 }

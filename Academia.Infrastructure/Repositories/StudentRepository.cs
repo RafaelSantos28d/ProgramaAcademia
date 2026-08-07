@@ -1,0 +1,56 @@
+﻿using Academia.Domain.Entities;
+using Academia.Domain.Interfaces;
+using Academia.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Academia.Infrastructure.Repositories
+{
+    public class StudentRepository : IStudentRepository
+    {
+        private readonly BancoContext _bancoContext;
+        private readonly IUnitOfWork _unityOfWork;
+        public StudentRepository(BancoContext bancoContext)
+        {
+            _bancoContext = bancoContext;
+        }
+
+        public async Task<Student> CreateStudent(Student student)
+        {
+            await _bancoContext.Students.AddAsync(student);
+            return student;
+        }
+
+        public async Task<IEnumerable<Student>> GetAll()
+        {
+            var students = await _bancoContext.Students.ToListAsync();
+            return students;
+        }
+
+        public async Task<Student> GetById(int id)
+        {
+            var student = await _bancoContext.Students.FindAsync(id);
+            return student;
+        }
+
+        public async Task<bool> Remove(int id)
+        {
+            var student = await GetById(id);
+            if(student == null)
+            {
+                return false;
+            }
+            _bancoContext.Students.Remove(student);
+            await _unityOfWork.CommitAsync();
+            return true;
+        }
+
+        public Student Update(Student student)
+        {
+            _bancoContext.Students.Update(student);
+            return student;
+        }
+    }
+}

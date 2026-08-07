@@ -5,12 +5,12 @@ using System.Text;
 
 namespace Academia.Domain.Interfaces
 {
-    public interface Student
+    public interface IStudentRepository
     {
-        Task<Student>CreateStudent(Student Student);
-        Task<Student> GetAll();
+        Task<Student>CreateStudent(Student student);
+        Task <IEnumerable<Student>> GetAll();
         Task<Student> GetById(int id);
-        Task<Student> Remove(int id);
-        Task<Student> Update(Student Student);
+        Task<bool> Remove(int id);
+        Student Update(Student student);
     }
 }

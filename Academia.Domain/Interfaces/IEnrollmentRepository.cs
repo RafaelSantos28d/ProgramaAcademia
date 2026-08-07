@@ -8,9 +8,9 @@ namespace Academia.Domain.Interfaces
     public interface IEnrollmentRepository
     {
         Task<Enrollment> CreateEnrollment(Enrollment enrollment);
-        Task<Enrollment> GetAll();
+        Task<IEnumerable<Enrollment>> GetAll();
         Task<Enrollment> GetById(int id);
-        Task<Enrollment> Remove(int id);
-        Task<Enrollment> Update(Enrollment enrollment);
+        Task<bool> Remove(int id);
+        Enrollment Update(Enrollment enrollment);
     }
 }
