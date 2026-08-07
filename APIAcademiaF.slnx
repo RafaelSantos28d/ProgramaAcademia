@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+  </Folder>
+  <Project Path="Academia.API/Academia.API.csproj" Id="91cf3f2b-a428-470f-85bc-0be42515acb4" />
+  <Project Path="Academia.Application/Academia.Application.csproj" />
+  <Project Path="Academia.Domain/Academia.Domain.csproj" />
+  <Project Path="Academia.InfraIoC/Academia.InfraIoC.csproj" />
+  <Project Path="Academia.Infrastructure/Academia.Infrastructure.csproj" />
+</Solution>

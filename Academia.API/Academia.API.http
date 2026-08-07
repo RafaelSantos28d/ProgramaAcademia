@@ -1,0 +1,6 @@
+@Academia.API_HostAddress = http://localhost:5208
+
+GET {{Academia.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
