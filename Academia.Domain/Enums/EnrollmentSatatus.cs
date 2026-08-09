@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Academia.Domain.Enums
 {
-    public enum EnrollmentPlanSatatus
+    public enum EnrollmentSatatus
     {
         Active,
         Canceled,

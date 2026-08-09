@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Academia.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Security.Principal;
 using System.Text;
@@ -15,7 +16,7 @@ namespace Academia.Domain.Entities
             StartDate = startDate;
             EndDate = endDate;
         }
-
+        public Enrollment() { }
         public int EnrollmentId { get; private set; }
         public int StudentId { get; private set; }
         public Student Student { get; private set; }
@@ -23,6 +24,7 @@ namespace Academia.Domain.Entities
         public Plan Plan { get;private set; }
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
+        public EnrollmentSatatus EnrollmentSatatus { get; private set; }
         public bool Late => DateTime.Now > EndDate;
         
     }

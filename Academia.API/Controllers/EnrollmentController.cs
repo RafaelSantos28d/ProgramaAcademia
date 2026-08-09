@@ -1,0 +1,45 @@
+﻿using Academia.Application.DTOs.Enrollment;
+using Academia.Application.Interfaces;
+using Academia.Domain.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Academia.API.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class EnrollmentController : ControllerBase
+    {
+        private readonly IEnrollmentService _enrollmentService;
+
+        public EnrollmentController(IEnrollmentService enrollmentService)
+        {
+            _enrollmentService = enrollmentService;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ResponseEnrollment>>> GetAll()
+        {
+            var enrollments = await _enrollmentService.GetAll();
+            return Ok(enrollments);
+        }
+        [HttpPost]
+        public async Task<ActionResult<ResponseEnrollment>> Create(CreateEnrollment createEnrollment)
+        {
+            var create = await _enrollmentService.CreateEnrollment(createEnrollment);
+            return Ok(create);
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ResponseEnrollment>> GetById([FromRoute]int id)
+        {
+            var enrollment = await _enrollmentService.GetById(id);
+            return Ok(enrollment);
+        }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<bool>>Remove([FromRoute]int id)
+        {
+            var result = await _enrollmentService.Remove(id);
+            return Ok(result);
+        }
+    }
+}

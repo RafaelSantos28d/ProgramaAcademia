@@ -11,7 +11,7 @@ namespace Academia.Infrastructure.Repositories
     public class StudentRepository : IStudentRepository
     {
         private readonly BancoContext _bancoContext;
-        private readonly IUnitOfWork _unityOfWork;
+        
         public StudentRepository(BancoContext bancoContext)
         {
             _bancoContext = bancoContext;
@@ -25,7 +25,7 @@ namespace Academia.Infrastructure.Repositories
 
         public async Task<IEnumerable<Student>> GetAll()
         {
-            var students = await _bancoContext.Students.ToListAsync();
+            var students = await _bancoContext.Students.Include(x=>x.Enrollments).ToListAsync();
             return students;
         }
 
@@ -43,7 +43,6 @@ namespace Academia.Infrastructure.Repositories
                 return false;
             }
             _bancoContext.Students.Remove(student);
-            await _unityOfWork.CommitAsync();
             return true;
         }
 

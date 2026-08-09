@@ -41,6 +41,13 @@ namespace Academia.Domain.Entities
             CPF = cpf;
             Phone = phone;
         }
+        public void AlterarDados(string name, string email,string cpf,string phone)
+        {
+            Name = name;
+            Email = email;
+            CPF = cpf;
+            Phone = phone;
+        }
 
     }
 }
