@@ -31,7 +31,8 @@ namespace Academia.Infrastructure.Repositories
 
         public async Task<Student> GetById(int id)
         {
-            var student = await _bancoContext.Students.FindAsync(id);
+            var student = await _bancoContext.Students.Include(x=>x.Enrollments).
+                FirstOrDefaultAsync(x=>x.StudentId ==id);
             return student;
         }
 
@@ -50,6 +51,10 @@ namespace Academia.Infrastructure.Repositories
         {
             _bancoContext.Students.Update(student);
             return student;
+        }
+        public async Task<bool> CpfExist(string cpf)
+        {
+            return await _bancoContext.Students.AnyAsync(x=>x.CPF == cpf);
         }
     }
 }

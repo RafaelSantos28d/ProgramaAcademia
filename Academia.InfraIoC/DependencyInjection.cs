@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Academia.InfraIoC
 {
@@ -40,6 +41,12 @@ namespace Academia.InfraIoC
 
             services.AddScoped<IPlanRepository, PlanRepository>();
             services.AddScoped<IPlanService, PlanService>();
+
+            services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
 
             return services;
         }

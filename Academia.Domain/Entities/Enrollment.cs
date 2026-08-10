@@ -26,6 +26,13 @@ namespace Academia.Domain.Entities
         public DateTime EndDate { get; private set; }
         public EnrollmentSatatus EnrollmentSatatus { get; private set; }
         public bool Late => DateTime.Now > EndDate;
-        
+        public void CalculateEndDate(int durationDays)
+        {
+            EndDate = StartDate.AddDays(durationDays);
+        }
+        public void Cancel()
+        {
+            EnrollmentSatatus = EnrollmentSatatus.Canceled;
+        }
     }
 }

@@ -2,6 +2,7 @@
 using Academia.Application.Interfaces;
 using Academia.Domain.Entities;
 using Academia.Domain.Interfaces;
+using Academia.Domain.Validation;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -24,8 +25,8 @@ namespace Academia.Application.Services
         public async Task<ResponsePlan> Create(CreatePlan createPlan)
         {
             var create =  _mapper.Map<Plan>(createPlan);
-
             var created = await _unitOfWork.PlanRepository.CreatePlan(create);
+           
             await _unitOfWork.CommitAsync();
             return _mapper.Map<ResponsePlan>(created);
         }
@@ -39,11 +40,20 @@ namespace Academia.Application.Services
         public async Task<ResponsePlan> GetById(int id)
         {
             var plan = await _unitOfWork.PlanRepository.GetById(id);
+            if(plan == null)
+            {
+                throw new NotFoundException("Plan not found");
+            }
             return _mapper.Map<ResponsePlan>(plan);
         }
 
         public async Task<bool> Remove(int id)
         {
+            var plan = await _unitOfWork.PlanRepository.GetById(id);
+            if (plan == null)
+            {
+                throw new NotFoundException("Plan not found");
+            }
             var result = await _unitOfWork.PlanRepository.Remove(id);
             await _unitOfWork.CommitAsync();
             return result;
@@ -51,7 +61,10 @@ namespace Academia.Application.Services
         public async Task<ResponsePlan> Update(UpdatePlan updatePlan)
         {
             var plan = await _unitOfWork.PlanRepository.GetById(updatePlan.PlanId);
-
+            if (plan == null)
+            {
+                throw new NotFoundException("Plan not found");
+            }
             plan.AlterarDados(
                 updatePlan.Name,
                 updatePlan.Price,

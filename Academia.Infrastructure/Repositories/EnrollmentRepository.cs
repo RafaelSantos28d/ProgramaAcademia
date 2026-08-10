@@ -1,4 +1,5 @@
 ﻿using Academia.Domain.Entities;
+using Academia.Domain.Enums;
 using Academia.Domain.Interfaces;
 using Academia.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace Academia.Infrastructure.Repositories
         public async Task<Enrollment> CreateEnrollment(Enrollment enrollment)
         {
             await _bancoContext.AddAsync(enrollment);
+            enrollment.CalculateEndDate(enrollment.Plan.DurationDays);
             return enrollment;
             
 
@@ -45,7 +47,8 @@ namespace Academia.Infrastructure.Repositories
                 return false;
             }
 
-            _bancoContext.Enrollments.Remove(enrollment);
+            enrollment.Cancel();
+
             return true;
 
         }

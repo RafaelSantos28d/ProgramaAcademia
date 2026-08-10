@@ -47,11 +47,11 @@ namespace Academia.Infrastructure.Repositories
             return true;
 
         }
-
         public Plan Update(Plan plan)
         {
             _context.Plans.Update(plan);
             return plan;
         }
+        
     }
 }
