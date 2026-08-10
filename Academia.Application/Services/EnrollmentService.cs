@@ -2,6 +2,7 @@
 using Academia.Application.Interfaces;
 using Academia.Domain.Entities;
 using Academia.Domain.Interfaces;
+using Academia.Domain.Validation;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,10 @@ namespace Academia.Application.Services
         public async Task<ResponseEnrollment> GetById(int id)
         {
             var Enrollment = await _unitOfWork.EnrollmentRepository.GetById(id);
+            if (Enrollment == null)
+            {
+                throw new BadRequestException("Id não encontrado");
+            }
             return _mapper.Map<ResponseEnrollment>(Enrollment);
         }
 

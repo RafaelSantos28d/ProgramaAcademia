@@ -40,6 +40,7 @@ namespace Academia.InfraIoC
 
             services.AddScoped<IPlanRepository, PlanRepository>();
             services.AddScoped<IPlanService, PlanService>();
+
             return services;
         }
     }
