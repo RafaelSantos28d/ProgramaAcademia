@@ -1,6 +1,7 @@
 ﻿using Academia.Application.DTOs.Enrollment;
 using Academia.Application.Interfaces;
 using Academia.Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace Academia.API.Controllers
         {
             _enrollmentService = enrollmentService;
         }
-
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ResponseEnrollment>>> GetAll()
         {

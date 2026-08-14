@@ -1,4 +1,5 @@
 ﻿using Academia.Domain.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace Academia.Infrastructure.Context
 {
-    public class BancoContext : DbContext
+    public class BancoContext : IdentityDbContext<AplicationUser>
     {
         public BancoContext(DbContextOptions<BancoContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
