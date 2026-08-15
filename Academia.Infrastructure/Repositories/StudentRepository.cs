@@ -27,7 +27,8 @@ namespace Academia.Infrastructure.Repositories
 
         public async Task<PagedList<Student>> GetAll(int currentPage,int pageSize)
         {
-            var query =  _bancoContext.Students.Include(x=>x.Enrollments).AsNoTracking();
+            var query =  _bancoContext.Students.Include(x=>x.Enrollments).ThenInclude(x=>x.Plan)
+                .AsNoTracking();
 
             return await PaginationHelper.CreateAsync(query, currentPage, pageSize);
         }

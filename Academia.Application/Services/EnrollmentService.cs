@@ -49,7 +49,8 @@ namespace Academia.Application.Services
         public async Task<PagedList<ResponseEnrollment>> GetAll(int currentPage, int pageSize)
         {
             var enrollments = await _unitOfWork.EnrollmentRepository.GetAll(currentPage, pageSize);
-            var enrollmentsResponse = _mapper.Map<IEnumerable<ResponseEnrollment>>(enrollments.Items);
+
+            var enrollmentsResponse =_mapper.Map<IEnumerable<ResponseEnrollment>>(enrollments.Items);
             return new PagedList<ResponseEnrollment>(enrollmentsResponse, currentPage,pageSize,enrollments.TotalCount);
         }
 

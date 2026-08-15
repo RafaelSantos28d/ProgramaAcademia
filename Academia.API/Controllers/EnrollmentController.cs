@@ -18,7 +18,7 @@ namespace Academia.API.Controllers
         {
             _enrollmentService = enrollmentService;
         }
-        [Authorize]
+        
         [HttpGet]
         public async Task<ActionResult<PagedList<ResponseEnrollment>>> GetAll(int currentPage,int pageSize)
         {

@@ -12,6 +12,6 @@ namespace Academia.Application.DTOs.Student
         public string Email { get; set; }
         public string CPF { get; set; }
         public string Phone { get; set; }
-        public ICollection<ResponseEnrollment> Enrollments { get; set; }
+        public ICollection<ResumoEnrollment> Enrollments { get; set; }
     }
 }
