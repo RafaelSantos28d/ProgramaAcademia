@@ -22,9 +22,9 @@ namespace Academia.API.Controllers
             return Ok(createStudent);
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ResponseStudent>>> GetAll()
+        public async Task<ActionResult<IEnumerable<ResponseStudent>>> GetAll(int currentPage,int pageSize)
         {
-            var students = await _studentService.GetAll();
+            var students = await _studentService.GetAll(currentPage, pageSize);
             return Ok(students);
 
         }

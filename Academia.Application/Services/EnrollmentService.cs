@@ -3,6 +3,7 @@ using Academia.Application.Interfaces;
 using Academia.Domain.Entities;
 using Academia.Domain.Enums;
 using Academia.Domain.Interfaces;
+using Academia.Domain.Pagination;
 using Academia.Domain.Validation;
 using AutoMapper;
 
@@ -45,10 +46,11 @@ namespace Academia.Application.Services
             return _mapper.Map<ResponseEnrollment>(created);
         }
 
-        public async Task<IEnumerable<ResponseEnrollment>> GetAll()
+        public async Task<PagedList<ResponseEnrollment>> GetAll(int currentPage, int pageSize)
         {
-            var Enrollments = await _unitOfWork.EnrollmentRepository.GetAll();
-            return _mapper.Map<IEnumerable<ResponseEnrollment>>(Enrollments);
+            var enrollments = await _unitOfWork.EnrollmentRepository.GetAll(currentPage, pageSize);
+            var enrollmentsResponse = _mapper.Map<IEnumerable<ResponseEnrollment>>(enrollments.Items);
+            return new PagedList<ResponseEnrollment>(enrollmentsResponse, currentPage,pageSize,enrollments.TotalCount);
         }
 
         public async Task<ResponseEnrollment> GetById(int id)

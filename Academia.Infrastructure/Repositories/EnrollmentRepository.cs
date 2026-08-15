@@ -1,7 +1,9 @@
 ﻿using Academia.Domain.Entities;
 using Academia.Domain.Enums;
 using Academia.Domain.Interfaces;
+using Academia.Domain.Pagination;
 using Academia.Infrastructure.Context;
+using Academia.Infrastructure.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -27,10 +29,12 @@ namespace Academia.Infrastructure.Repositories
 
         }
 
-        public async Task<IEnumerable<Enrollment>> GetAll()
+        public async Task<PagedList<Enrollment>> GetAll(int pageNumber, int pageSize)
         {
-            var enrollments = await _bancoContext.Enrollments.ToListAsync();
-            return enrollments;
+            var query =  _bancoContext.Enrollments.AsNoTracking();
+
+            return await PaginationHelper.CreateAsync(query, pageNumber, pageSize);
+           
         }
 
         public async Task<Enrollment> GetById(int id)

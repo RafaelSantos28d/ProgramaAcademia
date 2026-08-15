@@ -1,6 +1,7 @@
 ﻿using Academia.Application.DTOs.Enrollment;
 using Academia.Application.Interfaces;
 using Academia.Domain.Interfaces;
+using Academia.Domain.Pagination;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,9 +20,10 @@ namespace Academia.API.Controllers
         }
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ResponseEnrollment>>> GetAll()
+        public async Task<ActionResult<PagedList<ResponseEnrollment>>> GetAll(int currentPage,int pageSize)
         {
-            var enrollments = await _enrollmentService.GetAll();
+            var enrollments = await _enrollmentService.GetAll(currentPage,pageSize);
+
             return Ok(enrollments);
         }
         [HttpPost]
