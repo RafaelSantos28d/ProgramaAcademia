@@ -39,7 +39,7 @@ namespace Academia.Tests.Controller
                 Phone = "997277019"
             };
             var resultedExpected = new PagedList<ResponseStudent>(new[] { student, student2 }, 1, 2, 2)
-            { };
+            ;
              _studentServiceMock.Setup(service => service.GetAll(1, 2)).ReturnsAsync(resultedExpected);
 
             //Act
