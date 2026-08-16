@@ -18,8 +18,8 @@ namespace Academia.API.Controllers
         [HttpPost]
         public async Task<ActionResult<ResponseStudent>> Create(CreateStudent createStudent)
         {
-            await _studentService.CreateStudent(createStudent);
-            return Ok(createStudent);
+            var result = await _studentService.CreateStudent(createStudent);
+            return Ok(result);
         }
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ResponseStudent>>> GetAll(int currentPage,int pageSize)

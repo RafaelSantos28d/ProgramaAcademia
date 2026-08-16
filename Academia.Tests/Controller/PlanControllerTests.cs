@@ -8,7 +8,7 @@ using Academia.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
-namespace Academia.Tests
+namespace Academia.Tests.Controller
 {
     public class PlanControllerTests
     {
@@ -76,7 +76,7 @@ namespace Academia.Tests
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
             var actualValue = Assert.IsType<ResponsePlan>(okResult.Value);
             Assert.Equal(resultExpected, actualValue);
-            _mockService.Verify(service => service.GetAll(), Times.Once());
+            _mockService.Verify(service => service.Create(createPlan), Times.Once());
         }
         [Fact]
         public async Task GetById_ShouldReturnOK()
