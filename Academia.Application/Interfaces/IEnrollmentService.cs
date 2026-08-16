@@ -12,7 +12,7 @@ namespace Academia.Application.Interfaces
         Task<ResponseEnrollment> CreateEnrollment(CreateEnrollment createEnrollment);
         Task<PagedList<ResponseEnrollment>> GetAll(int currentPage, int pageSize);
         Task<ResponseEnrollment> GetById(int id);
-        Task<bool> Remove(int id);
+        Task<bool> Cancel(int id);
        
     }
 }

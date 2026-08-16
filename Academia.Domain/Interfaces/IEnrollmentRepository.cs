@@ -11,7 +11,7 @@ namespace Academia.Domain.Interfaces
         Task<Enrollment> CreateEnrollment(Enrollment enrollment);
         Task<PagedList<Enrollment>> GetAll(int pageSize,int pageNumber);
         Task<Enrollment> GetById(int id);
-        Task<bool> Remove(int id);
+        Task<bool> Cancel(int id);
         Enrollment Update(Enrollment enrollment);
     }
 }

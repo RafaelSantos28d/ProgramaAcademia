@@ -7,4 +7,5 @@
   <Project Path="Academia.Domain/Academia.Domain.csproj" />
   <Project Path="Academia.InfraIoC/Academia.InfraIoC.csproj" />
   <Project Path="Academia.Infrastructure/Academia.Infrastructure.csproj" />
+  <Project Path="Academia.Tests/Academia.Tests.csproj" Id="2268a42b-df46-46f7-8eae-230c5fc7fd05" />
 </Solution>

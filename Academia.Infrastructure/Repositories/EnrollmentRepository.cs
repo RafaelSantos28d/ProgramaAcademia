@@ -43,7 +43,7 @@ namespace Academia.Infrastructure.Repositories
             return enrollment;
         }
 
-        public async Task<bool> Remove(int id)
+        public async Task<bool> Cancel(int id)
         {
             var enrollment =await GetById(id);
             if(enrollment == null)

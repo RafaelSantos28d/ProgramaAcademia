@@ -64,14 +64,14 @@ namespace Academia.Application.Services
             return _mapper.Map<ResponseEnrollment>(enrollment);
         }
 
-        public async Task<bool> Remove(int id)
+        public async Task<bool> Cancel(int id)
         {
             var enrollment = await _unitOfWork.EnrollmentRepository.GetById(id);
             if (enrollment == null)
             {
                 throw new BadRequestException("Enrollment not found");
             }
-            var result = await _unitOfWork.EnrollmentRepository.Remove(id);
+            var result = await _unitOfWork.EnrollmentRepository.Cancel(id);
             await _unitOfWork.CommitAsync();
             return result;
         }
