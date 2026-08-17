@@ -9,6 +9,8 @@ namespace Academia.Application.Interfaces
     {
         Task<ResponseModel> CadastrarUsuario(RegisterModel register);
         Task<TokenModel> Login(LoginModel login);
+        Task<ResponseModel> CreateRole(string roleName);
+        Task<ResponseModel> AddRoleToUser(string email,string roleName);
 
     }
 }

@@ -1,10 +1,12 @@
 ﻿using Academia.Application.DTOs.User;
 using Academia.Application.Interfaces;
 using Academia.Domain.Entities;
+using Academia.Domain.Validation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Academia.Infrastructure.IdentityService
 {
@@ -23,6 +25,35 @@ namespace Academia.Infrastructure.IdentityService
             _configuration = configuration;
         }
 
+        public async Task<ResponseModel> AddRoleToUser(string email, string roleName)
+        {
+            var userExist = await _userManager.FindByEmailAsync(email);
+            if(userExist != null)
+            {
+                var result = await _userManager.AddToRoleAsync(userExist, roleName);
+                if(result.Succeeded)
+                {
+                    var response = new ResponseModel
+                    {
+                        Status = result.Succeeded.ToString(),
+                        Message = $"User {email} added to {roleName} role"
+                    };
+                    return response;
+                }
+                else
+                {
+
+                    var response = new ResponseModel
+                    {
+                        Status = "Error",
+                        Message = "Unable to add user to role"
+                    };
+                    return response;
+                }
+            }
+            throw new BadRequestException("Unable to find user");
+        }
+
         public async Task<ResponseModel> CadastrarUsuario(RegisterModel register)
         {
            
@@ -32,7 +63,6 @@ namespace Academia.Infrastructure.IdentityService
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = register.UserName,
             };
-
             var result = await _userManager.CreateAsync(aplicationUser, register.Password);
             var response = new ResponseModel
             {
@@ -51,6 +81,36 @@ namespace Academia.Infrastructure.IdentityService
             }
 
             return response;
+        }
+
+        public async Task<ResponseModel> CreateRole(string roleName)
+        {
+            var roleExist = await _roleManager.RoleExistsAsync(roleName);
+            if(!roleExist)
+            {
+                var result = await _roleManager.CreateAsync(new IdentityRole(roleName));
+                if(result.Succeeded)
+                {
+                    var response = new ResponseModel
+                    {
+                        Status = result.Succeeded.ToString(),
+                        Message = "Usuario cadastrado com sucesso"
+                    };
+                    return response;
+                }
+                else
+                {
+
+                    var response = new ResponseModel
+                    {
+                        Status = "Error",
+                        Message = "Erro ao cadastrar role"
+                    };
+                    return response;
+                }
+            }
+
+            throw new BadRequestException("Role already exist");
         }
 
         public async Task<TokenModel> Login(LoginModel login)

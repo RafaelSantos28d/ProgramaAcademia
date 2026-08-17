@@ -27,5 +27,17 @@ namespace Academia.API.Controllers
             var response = await _identityService.CadastrarUsuario(model);
             return Ok(response);
         }
+        [HttpPost("CreateRole")]
+        public async Task<ActionResult<ResponseModel>> CreateRole(string roleName)
+        {
+            var role = await _identityService.CreateRole(roleName);
+            return Ok(role);
+        }
+        [HttpPost("AddRoleToUser")]
+        public async Task<ActionResult<ResponseModel>> AddRoleToUser(string email, string roleName)
+        {
+            var result = await _identityService.AddRoleToUser(email, roleName);
+            return Ok(result);
+        }
     }
 }

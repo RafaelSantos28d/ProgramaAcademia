@@ -126,42 +126,6 @@ namespace Academia.Tests.Controller
             _enrollmentServiceMok.Verify(s => s.CreateEnrollment(createEnrollment), Times.Once());
 
         }
-        /*
-        [Fact]
-        public async Task Update_ShouldReturnOk()
-        {
-            //Arrange
-            var expectedResult = new ResponseEnrollment()
-            {
-                EnrollmentId = 1,
-                StudentId = 10,
-                StdentName = "Rafael",
-                PlanId = 5,
-                PlanName = "Plano Premium",
-                StartDate = new DateTime(2026, 8, 1),
-                EndDate = new DateTime(2026, 9, 1),
-                EnrollmentSatatus = EnrollmentSatatus.Active
-            };
-            var updateEnrollment = new UpdateEnrollment()
-            {
-                EnrollmentId = 1,
-                StudentId = 10,
-                PlanId = 5,
-                StartDate = new DateTime(2026, 8, 1),
-            };
-            _enrollmentServiceMok.Setup(s => s.Update(1)).ReturnsAsync(expectedResult);
-
-            //Act
-            var result = await _enrollmentController.GetById(1);
-
-            //Assert
-            var okResult = Assert.IsType<OkObjectResult>(result.Result);
-            var actualValue = Assert.IsType<ResponseEnrollment>(okResult.Value);
-
-            Assert.Equal(expectedResult, actualValue);
-            _enrollmentServiceMok.Verify(s => s.GetById(1), Times.Once());
-
-        }*/
         [Fact]
         public async Task Remove_ShouldReturnTrue()
         {
@@ -169,7 +133,7 @@ namespace Academia.Tests.Controller
             _enrollmentServiceMok.Setup(s => s.Cancel(1)).ReturnsAsync(true);
 
             //Act
-            var result = await _enrollmentController.Remove(1);
+            var result = await _enrollmentController.Cancel(1);
 
             //Arrange
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
