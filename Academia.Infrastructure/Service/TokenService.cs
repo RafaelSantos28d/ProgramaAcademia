@@ -43,7 +43,7 @@ namespace Academia.Infrastructure.IdentityService
 
         public ClaimsPrincipal GetClaimsPrincipal(string token, IConfiguration _conig)
         {
-            var secretKey = _conig["JWt:SecretKey"] ?? throw new InvalidOperationException("Invalid secret key");
+            var secretKey = _conig["Jwt:SecretKey"] ?? throw new InvalidOperationException("Invalid secret key");
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateAudience = true,

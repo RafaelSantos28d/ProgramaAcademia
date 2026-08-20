@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Academia.API.Controllers
 {
+    [Authorize(Roles = "Admin,Employee")]
     [Route("api/[controller]")]
     [ApiController]
     public class EnrollmentController : ControllerBase

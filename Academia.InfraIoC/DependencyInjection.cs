@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -43,11 +44,17 @@ namespace Academia.InfraIoC
                     ClockSkew = TimeSpan.Zero,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Secretkey"])),
                     ValidAudience = configuration["Jwt:ValidAudience"],
-                    ValidIssuer = configuration["Jwt:ValidIssuer"]
+                    ValidIssuer = configuration["Jwt:ValidIssuer"],
+                    RoleClaimType = ClaimTypes.Role,
+                    NameClaimType = ClaimTypes.Name
 
                 };
 
-
+            });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("EmployeeOnly", policy => policy.RequireRole("Employee"));
             });
 
             services.AddDbContext<BancoContext>(options =>

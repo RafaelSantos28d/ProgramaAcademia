@@ -1,5 +1,6 @@
 ﻿using Academia.Application.DTOs.Student;
 using Academia.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,7 @@ namespace Academia.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin,Employee")]
     public class StudentController : ControllerBase
     {
         private readonly IStudentService _studentService;

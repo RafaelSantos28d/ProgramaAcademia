@@ -10,7 +10,7 @@ namespace Academia.Application.DTOs.Enrollment
     {
         public int EnrollmentId { get;  set; }
         public int StudentId { get;  set; }
-        public string StdentName { get; set; }
+        public string StudentName { get; set; }
         public int PlanId { get;  set; }
         public string PlanName { get; set; }
         public DateTime StartDate { get;  set; }

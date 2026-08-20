@@ -10,25 +10,19 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.AddSwaggerGen(options =>
+builder.Services.AddCors(options =>
 {
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header,
-        Description = "Informe o token JWT."
-    });
-
-    options.AddSecurityRequirement(document =>
-        new OpenApiSecurityRequirement
+    options.AddPolicy("AllowAngularApp",
+        policy =>
         {
-            [new OpenApiSecuritySchemeReference("Bearer", document)] = []
+            policy.WithOrigins("http://localhost:4200") 
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
         });
 });
+builder.Services.AddInfrastructureSwagger();
 var app = builder.Build();
+app.UseCors("AllowAngularApp");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

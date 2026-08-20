@@ -124,11 +124,18 @@ namespace Academia.Infrastructure.IdentityService
                     new Claim(ClaimTypes.Name, user.UserName!),
                     new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString())
                 };
-                foreach(var roles in  userRoles)
+                if (!userRoles.Contains("Admin") && !userRoles.Contains("Employee"))
                 {
-                    authClaims.Add(new Claim(ClaimTypes.Role,userRoles.ToString()));
+                    throw new UnauthorizedAccessException(
+                        "Usuário não possui permissão para acessar o sistema."
+                    );
                 }
-                var token = _tokenService.GenerateAccessToken(authClaims,_configuration);
+                foreach (var role in  userRoles)
+                {
+                    authClaims.Add(new Claim(ClaimTypes.Role,role));
+                }
+                
+                    var token = _tokenService.GenerateAccessToken(authClaims,_configuration);
                 var refreshToken = _tokenService.GenerateRefreshToken();
                 _ = int.TryParse(_configuration["Jwt:RefreshTokenValidityMinutes"],
                     out int refreshTokenValidityToken);

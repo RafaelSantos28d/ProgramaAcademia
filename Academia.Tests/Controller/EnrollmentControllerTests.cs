@@ -31,7 +31,7 @@ namespace Academia.Tests.Controller
             {
                 EnrollmentId = 1,
                 StudentId = 10,
-                StdentName = "Rafael",
+                StudentName = "Rafael",
                 PlanId = 5,
                 PlanName = "Plano Premium",
                 StartDate = new DateTime(2026, 8, 1),
@@ -42,7 +42,7 @@ namespace Academia.Tests.Controller
             {
                 EnrollmentId = 2,
                 StudentId = 2,
-                StdentName = "Pedro",
+                StudentName = "Pedro",
                 PlanId = 5,
                 PlanName = "Plano Premium",
                 StartDate = new DateTime(2026, 8, 1),
@@ -71,7 +71,7 @@ namespace Academia.Tests.Controller
             {
                 EnrollmentId = 1,
                 StudentId = 10,
-                StdentName = "Rafael",
+                StudentName = "Rafael",
                 PlanId = 5,
                 PlanName = "Plano Premium",
                 StartDate = new DateTime(2026, 8, 1),
@@ -106,7 +106,7 @@ namespace Academia.Tests.Controller
             {
                 EnrollmentId = 1,
                 StudentId = 10,
-                StdentName = "Rafael",
+                StudentName = "Rafael",
                 PlanId = 5,
                 PlanName = "Plano Premium",
                 StartDate = new DateTime(2026, 8, 1),

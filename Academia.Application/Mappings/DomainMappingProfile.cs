@@ -22,7 +22,7 @@ namespace Academia.Application.Mappings
             CreateMap<ResponseEnrollment, CreateEnrollment>().ReverseMap();
             CreateMap<Enrollment, ResponseEnrollment>()
                 .ForMember(x=>x.PlanName, opt => opt.MapFrom(x => x.Plan.Name))
-                .ForMember(dest=>dest.StdentName,opt => opt.MapFrom(x=>x.Student.Name))
+                .ForMember(dest=>dest.StudentName,opt => opt.MapFrom(x=>x.Student.Name))
                 .ReverseMap();
             CreateMap<Enrollment, ResumoEnrollment>().
                 ForMember(dest=>dest.PlanName,opt=>opt.MapFrom(x=>x.Plan.Name))

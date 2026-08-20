@@ -1,6 +1,7 @@
 ﻿using Academia.Application.DTOs.Plan;
 using Academia.Application.Interfaces;
 using Academia.Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace Academia.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "Admin,Employee")]
     public class PlanController : ControllerBase
     {
         private readonly IPlanService _planService;
