@@ -152,7 +152,7 @@ namespace Academia.Infrastructure.IdentityService
 
             }
 
-            throw new InvalidOperationException("Erro");
+            throw new NotFoundException("Usuário não encontrado");
            
         }
         

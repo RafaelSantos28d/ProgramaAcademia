@@ -9,7 +9,7 @@ namespace Academia.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Policy = "Admin,Employee")]
+    [Authorize(Roles = "Admin,Employee")]
     public class PlanController : ControllerBase
     {
         private readonly IPlanService _planService;
