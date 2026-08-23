@@ -1,47 +1,35 @@
 # Sistema de Gerenciamento de Academia
 
-Sistema web para gerenciamento de academias, desenvolvido com **ASP.NET Core Web API** e **Angular**.
+API REST para gerenciamento de uma academia, desenvolvida com C# e ASP.NET Core.
 
-O projeto foi desenvolvido com foco em práticas de desenvolvimento backend, arquitetura em camadas, autenticação, persistência de dados, desenvolvimento de APIs REST e integração entre frontend e backend.
+O projeto foi desenvolvido com foco em práticas de desenvolvimento backend, arquitetura baseada em Clean Architecture, desenvolvimento de APIs REST, persistência de dados, autenticação e autorização, paginação e testes automatizados.
 
 ## Tecnologias
 
-### Backend
+- C#
+- .NET 10
+- ASP.NET Core Web API
+- Entity Framework Core
+- MySQL
+- ASP.NET Core Identity
+- JWT Authentication
+- AutoMapper
+- Swagger / OpenAPI
+- Repository Pattern
+- Unit of Work
+- DTOs
+- Paginação
+- xUnit
+- Moq
 
-* C#
-* .NET 10
-* ASP.NET Core Web API
-* Entity Framework Core
-* MySQL
-* ASP.NET Core Identity
-* JWT Authentication
-* AutoMapper
-* Swagger / OpenAPI
-* Repository Pattern
-* Unit of Work
-* DTOs
-* Paginação
+## Ferramentas
 
-### Frontend
-
-* Angular
-* TypeScript
-* Bootstrap
-* HTML5
-* CSS3
-
-### Ferramentas
-
-* Visual Studio
-* Visual Studio Code
-* Git
-* GitHub
-* MySQL
-* Swagger
-
-### Cloud
-
-* Microsoft Azure
+- Visual Studio
+- Visual Studio Code
+- Git
+- GitHub
+- MySQL
+- Swagger
 
 ## Arquitetura
 
@@ -62,47 +50,50 @@ flowchart TD
     INFRA --> DB
 ```
 
+A separação das responsabilidades permite reduzir o acoplamento entre as camadas e facilita a manutenção e evolução da aplicação.
+
 ## Funcionalidades
 
 ### Alunos
 
-* Cadastro de alunos
-* Consulta de alunos
-* Consulta de aluno por ID
-* Atualização de dados
-* Remoção de alunos
-* Validação de CPF
-* Paginação
-* Consulta de matrículas relacionadas
+- Cadastro de alunos
+- Consulta de alunos
+- Consulta de aluno por ID
+- Atualização de dados
+- Remoção de alunos
+- Validação de CPF
+- Paginação
+- Consulta de matrículas relacionadas
 
 ### Matrículas
 
-* Cadastro de matrículas
-* Consulta de matrículas
-* Associação entre aluno e plano
-* Controle do status da matrícula
+- Cadastro de matrículas
+- Consulta de matrículas
+- Associação entre aluno e plano
+- Controle do status da matrícula
 
 ### Planos
 
-* Cadastro de planos
-* Consulta de planos
-* Atualização de planos
-* Remoção de planos
+- Cadastro de planos
+- Consulta de planos
+- Atualização de planos
+- Remoção de planos
 
 ### Autenticação e autorização
 
-* Cadastro de usuários
-* Login
-* JWT Authentication
-* Refresh Token
-* ASP.NET Core Identity
-* Controle de acesso baseado em Roles
+- Cadastro de usuários
+- Login
+- JWT Authentication
+- Access Token
+- Refresh Token
+- ASP.NET Core Identity
+- Controle de acesso baseado em Roles
 
 ## API
 
-A aplicação disponibiliza uma API REST para comunicação entre o frontend e o backend.
+A aplicação disponibiliza uma API REST para gerenciamento dos recursos da academia.
 
-Exemplo de operações:
+Exemplos de operações:
 
 ```http
 GET    /api/student
@@ -118,7 +109,7 @@ As requisições para endpoints protegidos utilizam autenticação baseada em Be
 Authorization: Bearer {access_token}
 ```
 
-A API também possui documentação e testes manuais através do Swagger / OpenAPI.
+A API possui documentação através do Swagger / OpenAPI, permitindo visualizar e testar os endpoints disponíveis.
 
 ## Paginação
 
@@ -146,32 +137,35 @@ A paginação reduz a quantidade de dados processados e transferidos em cada req
 
 ## Banco de Dados
 
-O projeto utiliza MySQL como banco de dados relacional.
+O projeto utiliza MySQL como banco de dados relacional e Entity Framework Core como ORM.
 
-Principais entidades:
+Principais relacionamentos:
 
+```text
 Student
    │
    └── Enrollment
           │
           └── Plan
+```
 
 Os relacionamentos entre as entidades são configurados utilizando Entity Framework Core.
-## Configuração do ambiente
+
+As alterações na estrutura do banco são controladas através de EF Core Migrations.
+
+## Configuração do Ambiente
 
 ### Pré-requisitos
 
-* .NET 10 SDK
-* Node.js
-* Angular CLI
-* MySQL
-* Git
+- .NET 10 SDK
+- MySQL
+- Git
 
 ### Clonar o repositório
 
 ```bash
-git clone https://github.com/RafaelSantos28d/Programa-Academia.git
-cd Programa-Academia
+git clone https://github.com/RafaelSantos28d/ProgramaAcademia.git
+cd ProgramaAcademia
 ```
 
 ### Configuração do banco
@@ -189,7 +183,31 @@ Password=SUA_SENHA;
 
 Não utilize credenciais reais diretamente no código ou em arquivos versionados no GitHub.
 
-### Executar as migrations
+### User Secrets
+
+Inicialize o User Secrets no projeto da API:
+
+```bash
+dotnet user-secrets init
+```
+
+Configure a connection string:
+
+```bash
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "SUA_CONNECTION_STRING"
+```
+
+Configure o JWT Secret:
+
+```bash
+dotnet user-secrets set "Jwt:Secret" "SEU_SECRET"
+```
+
+Informações sensíveis não devem ser adicionadas ao repositório.
+
+## Migrations
+
+Para aplicar as migrations existentes:
 
 ```bash
 dotnet ef database update
@@ -203,73 +221,57 @@ dotnet ef database update \
     --startup-project Academia.API
 ```
 
-### Executar a API
+Para criar uma nova migration:
+
+```bash
+dotnet ef migrations add NomeDaMigration
+```
+
+## Executando a API
+
+Execute:
 
 ```bash
 dotnet run
 ```
 
-Após iniciar a aplicação, a documentação da API estará disponível através do Swagger.
-
-### Executar o frontend
-
-Entre no diretório do frontend:
-
-```bash
-cd frontend
-```
-
-Instale as dependências:
-
-```bash
-npm install
-```
-
-Execute a aplicação:
-
-```bash
-ng serve
-```
-
-O frontend estará disponível normalmente em:
+Após iniciar a aplicação, a documentação da API estará disponível através do Swagger:
 
 ```text
-http://localhost:4200
+https://localhost:{porta}/swagger
 ```
-
 
 ## Testes
 
-O projeto possui testes automatizados para componentes da aplicação, incluindo controllers e services.
+O projeto possui testes automatizados para componentes da aplicação, incluindo Controllers e Services.
 
-Os testes têm como objetivo validar:
+Os testes utilizam xUnit e Moq para validação dos comportamentos da aplicação.
 
-* Regras de negócio
-* Comportamento dos services
-* Respostas dos controllers
-* Status HTTP
-* Interações com dependências utilizando mocks
+São testados cenários como:
 
-## Objetivos técnicos
+- Regras de negócio
+- Criação de recursos
+- Atualização de recursos
+- Remoção de recursos
+- Consultas
+- Respostas HTTP
+- Interações com dependências utilizando mocks
 
-Este projeto foi desenvolvido para consolidar conhecimentos em:
+## Principais conceitos e práticas aplicados
 
-* Desenvolvimento de APIs REST com ASP.NET Core
-* C# e programação orientada a objetos
-* Entity Framework Core
-* MySQL
-* Clean Architecture
-* Repository Pattern
-* Unit of Work
-* DTOs
-* AutoMapper
-* Autenticação e autorização
-* ASP.NET Core Identity
-* JWT
-* Paginação
-* Testes automatizados
-* Angular
-* Integração frontend/backend
-* Git e GitHub
-
-
+- Desenvolvimento de APIs REST com ASP.NET Core
+- C# e programação orientada a objetos
+- Clean Architecture
+- Entity Framework Core
+- MySQL
+- Repository Pattern
+- Unit of Work
+- DTOs
+- AutoMapper
+- Autenticação e autorização
+- ASP.NET Core Identity
+- JWT Authentication
+- Paginação
+- Testes automatizados
+- Git e GitHub
+- Gerenciamento de configurações e secrets
