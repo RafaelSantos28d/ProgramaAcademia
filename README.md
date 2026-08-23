@@ -60,6 +60,7 @@ flowchart TD
     INFRA --> APP
     INFRA --> DOMAIN
     INFRA --> DB
+```
 
 ## Funcionalidades
 
