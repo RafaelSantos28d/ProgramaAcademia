@@ -146,7 +146,17 @@ A paginação reduz a quantidade de dados processados e transferidos em cada req
 
 ## Banco de Dados
 
+O projeto utiliza MySQL como banco de dados relacional.
 
+Principais entidades:
+
+Student
+   │
+   └── Enrollment
+          │
+          └── Plan
+
+Os relacionamentos entre as entidades são configurados utilizando Entity Framework Core.
 ## Configuração do ambiente
 
 ### Pré-requisitos
