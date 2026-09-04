@@ -19,28 +19,28 @@ namespace Academia.API.Controllers
         {
             _identityService = identityService;
         }
-        [HttpPost]
+        [HttpPost("Login")]
         public async Task<ActionResult<TokenModel>>Login(LoginModel model)
         {
             var token = await _identityService.Login(model);
             return Ok(token);
         }
         [HttpPost("Cadastro")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<ActionResult<ResponseModel>> Cadastro(RegisterModel model)
         {
             var response = await _identityService.CadastrarUsuario(model);
             return Ok(response);
         }
         [HttpPost("CreateRole")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<ActionResult<ResponseModel>> CreateRole(string roleName)
         {
             var role = await _identityService.CreateRole(roleName);
             return Ok(role);
         }
         [HttpPost("AddRoleToUser")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<ActionResult<ResponseModel>> AddRoleToUser(string email, string roleName)
         {
             var result = await _identityService.AddRoleToUser(email, roleName);

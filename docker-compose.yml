@@ -1,0 +1,36 @@
+
+services:
+  api:
+    build:
+      context:  .
+      dockerfile: Academia.API/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=mysql;Database=DbAcademiaTeste;User=root;Password=${DB_PASSWORD}
+      - JWT__ValidAudience=front-end
+      - JWT__ValidIssuer=api
+      - JWT__SecretKey= ${JWT_KEY}
+      - JWT__TokenValidityMinutes=60
+      - JWT__RefreshTokenValidityMinutes=60
+    depends_on:
+       mysql:
+        condition: service_healthy
+
+  mysql:
+    image: mysql:8.4
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}}
+      - MYSQL_DATABASE=DbAcademiaTeste
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  mysql_data:

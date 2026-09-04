@@ -1,5 +1,7 @@
 using Academia.API.Middleware;
 using Academia.InfraIoC;
+using Academia.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +24,13 @@ builder.Services.AddCors(options =>
 });
 builder.Services.AddInfrastructureSwagger();
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<BancoContext>();
+    dbContext.Database.Migrate();
+}
+
 app.UseCors("AllowAngularApp");
 
 // Configure the HTTP request pipeline.

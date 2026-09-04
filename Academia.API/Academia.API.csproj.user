@@ -4,5 +4,6 @@
     <ActiveDebugProfile>https</ActiveDebugProfile>
     <Controller_SelectedScaffolderID>ApiControllerEmptyScaffolder</Controller_SelectedScaffolderID>
     <Controller_SelectedScaffolderCategoryPath>root/Common/Api</Controller_SelectedScaffolderCategoryPath>
+    <NameOfLastUsedPublishProfile>C:\Users\mique\source\repos\APIAcademiaF\Academia.API\Properties\PublishProfiles\academiaapi-app-20260903193926.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

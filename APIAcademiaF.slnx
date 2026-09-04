@@ -1,6 +1,9 @@
 <Solution>
   <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".env" />
     <File Path=".gitignore" />
+    <File Path="docker-compose.yml" />
   </Folder>
   <Project Path="Academia.API/Academia.API.csproj" Id="91cf3f2b-a428-470f-85bc-0be42515acb4" />
   <Project Path="Academia.Application/Academia.Application.csproj" />
