@@ -1,6 +1,8 @@
 using Academia.API.Middleware;
+using Academia.Domain.Entities;
 using Academia.InfraIoC;
 using Academia.Infrastructure.Context;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 
@@ -27,8 +29,37 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<BancoContext>();
-    dbContext.Database.Migrate();
+    var context = scope.ServiceProvider.GetRequiredService<BancoContext>();
+    await context.Database.MigrateAsync();
+
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AplicationUser>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    if (!await roleManager.RoleExistsAsync("Admin"))
+    {
+        await roleManager.CreateAsync(new IdentityRole("Admin"));
+    }
+   
+    var adminEmail = "admin@academia.com";
+    var adminExistente = await userManager.FindByEmailAsync(adminEmail);
+
+    if (adminExistente is null)
+    {
+        var admin = new AplicationUser
+        {
+            UserName = "Administrador",
+            Email = adminEmail,
+            SecurityStamp = Guid.NewGuid().ToString()
+        };
+
+        var resultado = await userManager.CreateAsync(admin, "@Administrador123");
+
+        if (resultado.Succeeded)
+        {
+            await userManager.SetLockoutEnabledAsync(admin, false);
+            await userManager.AddToRoleAsync(admin, "Admin");
+        }
+    }
 }
 
 app.UseCors("AllowAngularApp");
