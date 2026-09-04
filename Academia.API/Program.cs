@@ -34,17 +34,15 @@ using (var scope = app.Services.CreateScope())
 app.UseCors("AllowAngularApp");
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+
     app.MapOpenApi();
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Academia v1");
     });
-}
 
-app.UseHttpsRedirection();
+
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
