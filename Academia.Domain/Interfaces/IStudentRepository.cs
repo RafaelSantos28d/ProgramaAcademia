@@ -14,5 +14,6 @@ namespace Academia.Domain.Interfaces
         Task<bool> Remove(int id);
         Student Update(Student student);
         Task<bool> CpfExist(string cpf);
+        Task<bool> CpfIsValid(string cpf);
     }
 }

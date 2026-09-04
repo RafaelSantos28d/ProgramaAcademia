@@ -27,6 +27,11 @@ namespace Academia.Application.Services
         {
             var create = _mapper.Map<Student>(createStudent);
             var cpfExist = await _unitOfWork.StudentRepository.CpfExist(create.CPF);
+            var cpfIsValid = await _unitOfWork.StudentRepository.CpfIsValid(create.CPF);
+            if(cpfIsValid == false)
+            {
+                throw new DomainValidationException("Invalid CPF");
+            }
             if (cpfExist == true)
             {
                 throw new BadRequestException("Student already registered");

@@ -13,8 +13,8 @@ namespace Academia.Infrastructure.EntitiesConfiguration
         {
             builder.Property(x => x.Name).HasMaxLength(250).IsRequired();
             builder.Property(x=>x.Email).HasMaxLength(270).IsRequired();
-            builder.Property(x=> x.CPF).HasMaxLength(11).IsRequired(); 
-            builder.Property(x=>x.Phone).HasMaxLength(10).IsRequired();
+            builder.Property(x=> x.CPF).HasMaxLength(20).IsRequired(); 
+            builder.Property(x=>x.Phone).HasMaxLength(20).IsRequired();
         }
     }
 }

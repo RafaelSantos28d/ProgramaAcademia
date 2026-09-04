@@ -60,5 +60,47 @@ namespace Academia.Infrastructure.Repositories
         {
             return await _bancoContext.Students.AnyAsync(x=>x.CPF == cpf);
         }
+        public async Task<bool>CpfIsValid(string cpf)
+        {
+            cpf = new string(cpf.Where(char.IsDigit).ToArray());
+
+
+            if (cpf.Length != 11)
+
+                return false;
+
+
+            if (cpf.Distinct().Count() == 1)
+
+                return false;
+
+
+
+            int soma = 0;
+
+            for (int i = 0; i < 9; i++)
+
+                soma += (cpf[i] - '0') * (10 - i);
+
+
+            int d1 = (soma * 10) % 11;
+
+            if (d1 == 10) d1 = 0;
+
+
+            soma = 0;
+
+            for (int i = 0; i < 10; i++)
+
+                soma += (cpf[i] - '0') * (11 - i);
+
+
+            int d2 = (soma * 10) % 11;
+
+            if (d2 == 10) d2 = 0;
+
+
+            return cpf[9] - '0' == d1 && cpf[10] - '0' == d2;
+        }
     }
 }
