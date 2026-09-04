@@ -58,6 +58,7 @@ namespace Academia.Infrastructure.Repositories
         }
         public async Task<bool> CpfExist(string cpf)
         {
+            cpf = new string(cpf.Where(char.IsDigit).ToArray());
             return await _bancoContext.Students.AnyAsync(x=>x.CPF == cpf);
         }
         public async Task<bool>CpfIsValid(string cpf)

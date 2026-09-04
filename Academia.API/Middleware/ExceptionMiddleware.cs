@@ -43,22 +43,18 @@ namespace Academia.API.Middleware
             {
                 await HandleExceptionAsync(context, ex, HttpStatusCode.NotFound);
             }
-            catch(BadRequestException ex)
+            catch (BadRequestException ex)
             {
-                await HandleExceptionAsync(context,ex, HttpStatusCode.BadRequest);
+                await HandleExceptionAsync(context, ex, HttpStatusCode.BadRequest);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                await HandleExceptionAsync( context,  ex,HttpStatusCode.Unauthorized);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                context.Response.ContentType = "application/json";
-                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                var response = _env.IsDevelopment() ? new ApiException(context.Response.StatusCode.ToString(), ex.Message, ex.StackTrace) :
-                    new ApiException(context.Response.StatusCode.ToString(), ex.Message, "Internal server error");
-
-                var option = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-                var json = JsonSerializer.Serialize(response, option);
-                await context.Response.WriteAsync(json);
-
+                await HandleExceptionAsync(context,ex,HttpStatusCode.InternalServerError);
             }
         }
     }

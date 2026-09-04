@@ -20,13 +20,14 @@ namespace Academia.Domain.Entities
 
         public Student(int studentId, string name, string email, string cpf, string phone)
         {
-
-            Validation(studentId, name, email, cpf, phone);
+            DomainValidationException.When(studentId < 0, "Invalid id");
+            StudentId = studentId;
+            Validation( name, email, cpf, phone);
         }
 
-        public void Validation(int studentId, string name, string email, string cpf, string phone)
+        public void Validation(string name, string email, string cpf, string phone)
         {
-            DomainValidationException.When(studentId < 0, "Invalid id");
+           
             DomainValidationException.When(name.Length > 250, "Invalid name size ");
             DomainValidationException.When(string.IsNullOrEmpty(name), "Name is required");
             DomainValidationException.When(string.IsNullOrEmpty(email), "E-mail is required");
@@ -35,7 +36,6 @@ namespace Academia.Domain.Entities
             DomainValidationException.When(email.Length > 270, "Invalid e-mail size");
             DomainValidationException.When(string.IsNullOrEmpty(phone), "Phone number is required");
             DomainValidationException.When(phone.Length > 20, "Invalid phone");
-            StudentId = studentId;
             Name = name;
             Email = email;
             CPF = FormatarCPF(cpf);
@@ -43,26 +43,22 @@ namespace Academia.Domain.Entities
         }
         public void AlterarDados(string name, string email, string cpf, string phone)
         {
-            Name = name;
-            Email = email;
-            CPF = cpf;
-            Phone = phone;
+            Validation(name, email, cpf, phone);
         }
         private static string FormatarCPF(string cpf)
         {
 
+            cpf = cpf.Replace(".", "")
+             .Replace("-", "")
+             .Replace(" ", "");
+
             if (cpf.Length != 11)
-
-                return cpf;
-
+                throw new DomainValidationException("CPF deve conter 11 dígitos.");
 
             return $"{cpf.Substring(0, 3)}." +
-
-            $"{cpf.Substring(3, 3)}." +
-
-            $"{cpf.Substring(6, 3)}-" +
-
-            $"{cpf.Substring(9, 2)}";
+                   $"{cpf.Substring(3, 3)}." +
+                   $"{cpf.Substring(6, 3)}-" +
+                   $"{cpf.Substring(9, 2)}";
         }
         private static string FormatarCelular(string celular)
         {

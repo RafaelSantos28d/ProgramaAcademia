@@ -8,7 +8,7 @@ namespace Academia.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin,Employee")]
+    //[Authorize(Roles = "Admin,Employee")]
     public class StudentController : ControllerBase
     {
         private readonly IStudentService _studentService;
