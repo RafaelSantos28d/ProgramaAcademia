@@ -7,8 +7,11 @@ O projeto foi desenvolvido com foco em práticas de desenvolvimento backend, arq
 ## Demonstração
 
   Disponível no deploy do Render
-
+ 
   [Acesse o Swagger](https://programaacademia.onrender.com/swagger/index.html)
+   ### Credenciais:
+  #### UserName: Administrador
+  #### Password: @Administrado123
 
 A API pode ser explorada e testada diretamente através do Swagger.
 ## Tecnologias
