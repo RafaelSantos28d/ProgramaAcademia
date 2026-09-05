@@ -4,6 +4,13 @@ API REST para gerenciamento de uma academia, desenvolvida com C# e ASP.NET Core.
 
 O projeto foi desenvolvido com foco em práticas de desenvolvimento backend, arquitetura baseada em Clean Architecture, desenvolvimento de APIs REST, persistência de dados, autenticação e autorização, paginação e testes automatizados.
 
+## Demonstração
+
+  Disponível no deploy do Render
+
+  [Acesse o Swagger](https://programaacademia.onrender.com/swagger/index.html)
+
+A API pode ser explorada e testada diretamente através do Swagger.
 ## Tecnologias
 
 - C#
@@ -21,6 +28,7 @@ O projeto foi desenvolvido com foco em práticas de desenvolvimento backend, arq
 - Paginação
 - xUnit
 - Moq
+- Docker
 
 ## Ferramentas
 
@@ -30,6 +38,8 @@ O projeto foi desenvolvido com foco em práticas de desenvolvimento backend, arq
 - GitHub
 - MySQL
 - Swagger
+
+
 
 ## Arquitetura
 
@@ -153,6 +163,26 @@ Os relacionamentos entre as entidades são configurados utilizando Entity Framew
 
 As alterações na estrutura do banco são controladas através de EF Core Migrations.
 
+## Controle de acesso
+
+O acesso aos endpoints protegidos é controlado através de Roles.
+
+### Perfis disponíveis
+### Admin
+
+- Possui acesso aos endpoints protegidos da API.
+- Pode gerenciar alunos, planos e matrículas.
+- Pode cadastrar novos usuários com a role Employee.
+
+### Employee
+
+- Possui acesso aos endpoints protegidos da API.
+- Pode gerenciar alunos, planos e matrículas.
+- Não pode cadastrar novos usuários Employee.
+### Usuário sem autenticação
+
+- Não possui acesso aos endpoints protegidos.
+
 ## Configuração do Ambiente
 
 ### Pré-requisitos
@@ -275,3 +305,4 @@ São testados cenários como:
 - Testes automatizados
 - Git e GitHub
 - Gerenciamento de configurações e secrets
+- Docker
