@@ -21,7 +21,7 @@ namespace Academia.API.Controllers
         public async Task<ActionResult<ResponseStudent>> Create(CreateStudent createStudent)
         {
             var result = await _studentService.CreateStudent(createStudent);
-            return Ok(result);
+            return CreatedAtAction(nameof(GetById), new { id = result.StudentId }, result);
         }
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ResponseStudent>>> GetAll(int currentPage,int pageSize)
@@ -45,7 +45,7 @@ namespace Academia.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<ResponseStudent>> Update([FromRoute] int id,UpdateDTO updateStudent)
+        public async Task<ActionResult<ResponseStudent>> Update([FromRoute] int id,UpdateStudentRequest updateStudent)
         {
             var student = await _studentService.Update(id,updateStudent);
             return Ok(student);

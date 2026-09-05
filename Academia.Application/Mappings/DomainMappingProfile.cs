@@ -16,7 +16,7 @@ namespace Academia.Application.Mappings
             CreateMap<Student, CreateStudent>().ReverseMap();
             CreateMap<ResponseStudent, CreateStudent>().ReverseMap();
             CreateMap<Student, ResponseStudent>().ReverseMap();
-            CreateMap<Student, UpdateDTO>().ReverseMap(); CreateMap<ResponseStudent, UpdateDTO>();
+            CreateMap<Student, UpdateStudentRequest>().ReverseMap(); CreateMap<ResponseStudent, UpdateStudentRequest>();
 
             CreateMap<Enrollment, CreateEnrollment>().ReverseMap();
             CreateMap<ResponseEnrollment, CreateEnrollment>().ReverseMap();

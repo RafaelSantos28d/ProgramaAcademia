@@ -75,7 +75,7 @@ namespace Academia.Application.Services
             return result;
         }
 
-        public async Task<ResponseStudent> Update(int id,UpdateDTO update)
+        public async Task<ResponseStudent> Update(int id,UpdateStudentRequest update)
         {
 
             var student = await _unitOfWork.StudentRepository.GetById(id);

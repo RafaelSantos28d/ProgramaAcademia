@@ -31,7 +31,7 @@ namespace Academia.API.Controllers
         public async Task<ActionResult<ResponseEnrollment>> Create(CreateEnrollment createEnrollment)
         {
             var create = await _enrollmentService.CreateEnrollment(createEnrollment);
-            return Ok(create);
+            return CreatedAtAction(nameof(GetById), new { id = create.EnrollmentId }, create);
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<ResponseEnrollment>> GetById([FromRoute]int id)

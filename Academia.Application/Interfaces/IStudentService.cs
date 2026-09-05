@@ -13,6 +13,6 @@ namespace Academia.Application.Interfaces
         Task<PagedList<ResponseStudent>> GetAll(int currentPage, int pageSize);
         Task<ResponseStudent> GetById(int id);
         Task<bool> Remove(int id);
-        Task<ResponseStudent> Update(int id, UpdateDTO updateStudent);
+        Task<ResponseStudent> Update(int id, UpdateStudentRequest updateStudent);
     }
 }

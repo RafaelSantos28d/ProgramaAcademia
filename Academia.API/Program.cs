@@ -32,7 +32,7 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<BancoContext>();
     await context.Database.MigrateAsync();
 
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AplicationUser>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
     if (!await roleManager.RoleExistsAsync("Admin"))
@@ -63,7 +63,7 @@ using (var scope = app.Services.CreateScope())
 
     if (adminExistente is null)
     {
-        var admin = new AplicationUser
+        var admin = new ApplicationUser
         {
             UserName = "Administrador",
             Email = adminEmail,

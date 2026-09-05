@@ -12,12 +12,12 @@ namespace Academia.Infrastructure.IdentityService
 {
     public class IdentityService : IIdentityservice
     {
-        private readonly UserManager<AplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
         private readonly ITokenService _tokenService;
 
-        public IdentityService(UserManager<AplicationUser> userManager, RoleManager<IdentityRole> roleManager, ITokenService tokenService, IConfiguration configuration)
+        public IdentityService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, ITokenService tokenService, IConfiguration configuration)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -54,7 +54,7 @@ namespace Academia.Infrastructure.IdentityService
 
         public async Task<ResponseModel> CadastrarUsuario(RegisterModel register)
         {
-            AplicationUser aplicationUser = new()
+            ApplicationUser aplicationUser = new()
             {
                 Email = register.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),

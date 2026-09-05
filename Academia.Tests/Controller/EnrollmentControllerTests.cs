@@ -3,6 +3,7 @@ using Academia.Application.DTOs.Enrollment;
 using Academia.Application.Interfaces;
 using Academia.Domain.Enums;
 using Academia.Domain.Pagination;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System;
@@ -119,11 +120,14 @@ namespace Academia.Tests.Controller
             var result = await _enrollmentController.Create(createEnrollment);
 
             //Assert
-            var okResult = Assert.IsType<OkObjectResult>(result.Result);
-            var actualValue = Assert.IsType<ResponseEnrollment>(okResult.Value);
+            var createdResult = Assert.IsType<CreatedAtActionResult>(result.Result);
+            Assert.Equal(nameof(_enrollmentController.GetById), createdResult.ActionName); 
+            Assert.Equal(expectedResult.EnrollmentId, createdResult.RouteValues["id"]);
+
+            var actualValue = Assert.IsType<ResponseEnrollment>(createdResult.Value);
 
             Assert.Equal(expectedResult, actualValue);
-            _enrollmentServiceMok.Verify(s => s.CreateEnrollment(createEnrollment), Times.Once());
+            _enrollmentServiceMok.Verify(s => s.CreateEnrollment(createEnrollment), Times.Once);
 
         }
         [Fact]
@@ -135,10 +139,9 @@ namespace Academia.Tests.Controller
             //Act
             var result = await _enrollmentController.Cancel(1);
 
-            //Arrange
-            var okResult = Assert.IsType<OkObjectResult>(result.Result);
-            var actualValue = Assert.IsType<bool>(okResult.Value);
-            Assert.True(actualValue);
+            //Assert
+            Assert.IsType<NoContentResult>(result);
+            
             _enrollmentServiceMok.Verify(s => s.Cancel(1), Times.Once);
         }
     }

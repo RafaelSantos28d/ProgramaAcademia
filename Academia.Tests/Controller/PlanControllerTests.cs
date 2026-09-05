@@ -73,10 +73,12 @@ namespace Academia.Tests.Controller
             var result = await _planController.Create(createPlan);
 
             //Assert
-            var okResult = Assert.IsType<OkObjectResult>(result.Result);
-            var actualValue = Assert.IsType<ResponsePlan>(okResult.Value);
+            var createdResult = Assert.IsType<CreatedAtActionResult>(result.Result);
+            Assert.Equal(nameof(_planController.GetById), createdResult.ActionName);
+            Assert.Equal(resultExpected.PlanId, createdResult.RouteValues["id"]);
+            var actualValue = Assert.IsType<ResponsePlan>(createdResult.Value); 
             Assert.Equal(resultExpected, actualValue);
-            _mockService.Verify(service => service.Create(createPlan), Times.Once());
+            _mockService.Verify(service => service.Create(createPlan), Times.Once);
         }
         [Fact]
         public async Task GetById_ShouldReturnOK()
@@ -104,13 +106,13 @@ namespace Academia.Tests.Controller
         {
             //Arrange
 
-            var planUpdate = new UpdatePlan { DurationDays = 30, PlanId = 1, Name = "Test", Price = 400 };
-
+            var planUpdate = new UpdatePlan { DurationDays = 30, Name = "Test", Price = 400 };
+            int id = 1;
             var planResponse = new ResponsePlan { DurationDays = 30, PlanId = 1, Name = "Test", Price = 400 };
 
             var resultExpeted = planResponse;
 
-            _mockService.Setup(service => service.Update(planUpdate)).ReturnsAsync(resultExpeted);
+            _mockService.Setup(service => service.Update(id,planUpdate)).ReturnsAsync(resultExpeted);
 
             //Act
 
@@ -120,7 +122,7 @@ namespace Academia.Tests.Controller
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
             var actualValue = Assert.IsType<ResponsePlan>(okResult.Value);
             Assert.Equal(actualValue,resultExpeted);
-            _mockService.Verify(service => service.Update(planUpdate), Times.Once());
+            _mockService.Verify(service => service.Update(id,planUpdate), Times.Once());
 
 
         }
@@ -134,10 +136,9 @@ namespace Academia.Tests.Controller
             var result = await _planController.Remove(1);
 
             //Assert
-            var okResult = Assert.IsType<OkObjectResult>(result.Result);
-
-            var actualValue =Assert.IsType<bool>(okResult.Value);
-            Assert.Equal(true,actualValue);
+            Assert.IsType<NoContentResult>(result);
+            
+            _mockService.Verify(x => x.Remove(1), Times.Once);
 
         }
     }

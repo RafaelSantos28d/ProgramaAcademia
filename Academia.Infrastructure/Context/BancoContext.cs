@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Academia.Infrastructure.Context
 {
-    public class BancoContext : IdentityDbContext<AplicationUser>
+    public class BancoContext : IdentityDbContext<ApplicationUser>
     {
         public BancoContext(DbContextOptions<BancoContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

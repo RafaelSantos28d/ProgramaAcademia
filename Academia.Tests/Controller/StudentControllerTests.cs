@@ -109,10 +109,14 @@ namespace Academia.Tests.Controller
             var result = await _studentController.Create(createStudent);
             //Assert
 
-            var okResult = Assert.IsType<OkObjectResult>(result.Result);
-            var actualValue = Assert.IsType<ResponseStudent>(okResult.Value);
-            Assert.Equal(actualValue, expectedResult);
-            _studentServiceMock.Verify( s => s.CreateStudent(createStudent),Times.Once);
+            var createdResult = Assert.IsType<CreatedAtActionResult>(result.Result);
+            Assert.Equal(nameof(_studentController.GetById), createdResult.ActionName);
+            Assert.Equal(expectedResult.StudentId, createdResult.RouteValues["id"]);
+
+            var actualValue = Assert.IsType<ResponseStudent>(createdResult.Value);
+            Assert.Equal(expectedResult, actualValue);
+
+            _studentServiceMock.Verify(s => s.CreateStudent(createStudent), Times.Once);
         }
         [Fact]
         public async Task Remove_ShouldReturnTrue()
@@ -124,18 +128,15 @@ namespace Academia.Tests.Controller
             var result = await _studentController.Remove(1);
 
             //Arrange
-            var okResult = Assert.IsType<OkObjectResult>(result.Result);
-            var actualValue = Assert.IsType<bool>(okResult.Value);
-            Assert.True(actualValue);
-            _studentServiceMock.Verify(s => s.Remove(1), Times.Once);
+            Assert.IsType<NoContentResult>(result); _studentServiceMock.Verify(s => s.Remove(1), Times.Once);
         }
         [Fact]
         public async Task Update_SholdReturnOk()
         {
             //Arrange
-            var updateStudante = new UpdateDTO
+            var updateStudante = new UpdateStudentRequest
             {
-                StudentId = 1,
+                
                 CPF = "111111111",
                 Email = "rafa@gmail.com",
                 Name = "Rafa",
@@ -150,18 +151,17 @@ namespace Academia.Tests.Controller
                 Phone = "997277019"
             };
 
-            _studentServiceMock.Setup(s=>s.Update(updateStudante)).ReturnsAsync(responseStudent);
+            _studentServiceMock.Setup(s=>s.Update(1,updateStudante)).ReturnsAsync(responseStudent);
 
             //Act
             var result = await _studentController.Update(1, updateStudante);
 
             //Assert
-
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
             var actualValue = Assert.IsType<ResponseStudent>(okResult.Value);
             Assert.Equal(responseStudent, actualValue);
 
-            _studentServiceMock.Verify(s=>s.Update(updateStudante),Times.Once);
+            _studentServiceMock.Verify(s=>s.Update(1,updateStudante),Times.Once);
 
         }
     }

@@ -34,7 +34,7 @@ namespace Academia.API.Controllers
         public async Task<ActionResult<ResponsePlan>> Create(CreatePlan createPlan)
         {
             var create = await _planService.Create(createPlan);
-            return Ok(create);
+            return CreatedAtAction(nameof(GetById), new { id = create.PlanId }, create);
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult>Remove([FromRoute]int id)
