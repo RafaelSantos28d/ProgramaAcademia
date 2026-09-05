@@ -115,14 +115,14 @@ namespace Academia.Infrastructure.IdentityService
 
             if (user is null || !await _userManager.CheckPasswordAsync(user, login.Password!))
             {
-                throw new NotFoundException("Usuário ou senha inválidos.");
+                throw new UnauthorizedAccessException("Usuário ou senha inválidos.");
             }
 
             var userRoles = await _userManager.GetRolesAsync(user);
 
             if (!userRoles.Contains("Admin") && !userRoles.Contains("Employee"))
             {
-                throw new UnauthorizedAccessException("Usuário não possui permissão para acessar o sistema.");
+                throw new ForbiddenException("Usuário não possui permissão para acessar o sistema.");
 
             }
             var authClaims = new List<Claim>

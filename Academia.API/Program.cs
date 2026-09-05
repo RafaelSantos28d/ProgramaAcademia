@@ -37,10 +37,28 @@ using (var scope = app.Services.CreateScope())
 
     if (!await roleManager.RoleExistsAsync("Admin"))
     {
-        await roleManager.CreateAsync(new IdentityRole("Admin"));
+        var roleResult = await roleManager.CreateAsync(new IdentityRole("Admin"));
+        if (!roleResult.Succeeded)
+        {
+            var erros = string.Join(
+                "; ",
+                roleResult.Errors.Select(e => e.Description));
+
+            throw new InvalidOperationException(
+                $"Não foi possível criar a role Admin: {erros}");
+        }
+
     }
-   
-    var adminEmail = "admin@academia.com";
+
+    var adminEmail = builder.Configuration["Admin:Email"];
+    var adminPassword = builder.Configuration["Admin:Password"];
+
+    if (string.IsNullOrWhiteSpace(adminEmail) ||
+    string.IsNullOrWhiteSpace(adminPassword))
+    {
+        throw new InvalidOperationException(
+            "As credenciais do administrador não foram configuradas.");
+    }
     var adminExistente = await userManager.FindByEmailAsync(adminEmail);
 
     if (adminExistente is null)
@@ -51,13 +69,29 @@ using (var scope = app.Services.CreateScope())
             Email = adminEmail,
             SecurityStamp = Guid.NewGuid().ToString()
         };
-
-        var resultado = await userManager.CreateAsync(admin, "@Administrador123");
-
-        if (resultado.Succeeded)
+        
+        var resultado = await userManager.CreateAsync(admin, adminPassword);
+        if (!resultado.Succeeded)
         {
-            await userManager.SetLockoutEnabledAsync(admin, false);
+            var erros = string.Join(
+                "; ",
+                resultado.Errors.Select(e => e.Description));
+
+            throw new InvalidOperationException(
+                $"Não foi possível criar o administrador: {erros}");
+        }
+        await userManager.SetLockoutEnabledAsync(admin, false);
+        var roleResult =
             await userManager.AddToRoleAsync(admin, "Admin");
+
+        if (!roleResult.Succeeded)
+        {
+            var erros = string.Join(
+                "; ",
+                roleResult.Errors.Select(e => e.Description));
+
+            throw new InvalidOperationException(
+                $"Não foi possível adicionar o administrador à role: {erros}");
         }
     }
 }

@@ -58,9 +58,9 @@ namespace Academia.Application.Services
             await _unitOfWork.CommitAsync();
             return result;
         }
-        public async Task<ResponsePlan> Update(UpdatePlan updatePlan)
+        public async Task<ResponsePlan> Update(int id,UpdatePlan updatePlan)
         {
-            var plan = await _unitOfWork.PlanRepository.GetById(updatePlan.PlanId);
+            var plan = await _unitOfWork.PlanRepository.GetById(id);
             if (plan == null)
             {
                 throw new NotFoundException("Plan not found");

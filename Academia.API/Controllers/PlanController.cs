@@ -37,10 +37,10 @@ namespace Academia.API.Controllers
             return Ok(create);
         }
         [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>>Remove([FromRoute]int id)
+        public async Task<ActionResult>Remove([FromRoute]int id)
         {
-            var result = await _planService.Remove(id);
-            return Ok(result);
+            await _planService.Remove(id);
+            return NoContent();
         }
         [HttpPut("{id}")]
         public async Task<ActionResult<ResponsePlan>> Update([FromRoute]int id,UpdatePlan updatePlan)

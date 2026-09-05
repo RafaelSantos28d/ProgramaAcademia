@@ -26,7 +26,7 @@ namespace Academia.API.Controllers
             return Ok(token);
         }
         [HttpPost("Cadastro")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ResponseModel>> Cadastro(RegisterModel model)
         {
             var response = await _identityService.CadastrarUsuario(model);
@@ -40,7 +40,7 @@ namespace Academia.API.Controllers
             return Ok(response);
         }
         [HttpPost("CreateRole")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ResponseModel>> CreateRole(string roleName)
         {
             var response = await _identityService.CreateRole(roleName);
@@ -52,7 +52,7 @@ namespace Academia.API.Controllers
             return Ok(response);
         }
         [HttpPost("AddRoleToUser")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ResponseModel>> AddRoleToUser(string email, string roleName)
         {
             var result = await _identityService.AddRoleToUser(email, roleName);

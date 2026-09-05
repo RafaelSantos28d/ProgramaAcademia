@@ -6,7 +6,6 @@ namespace Academia.Application.DTOs.Plan
 {
     public class UpdatePlan
     {
-        public int PlanId { get;  set; }
         public string Name { get;  set; }
         public decimal Price { get; set; }
         public int DurationDays { get;  set; }

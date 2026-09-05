@@ -75,10 +75,10 @@ namespace Academia.Application.Services
             return result;
         }
 
-        public async Task<ResponseStudent> Update(UpdateDTO update)
+        public async Task<ResponseStudent> Update(int id,UpdateDTO update)
         {
 
-            var student = await _unitOfWork.StudentRepository.GetById(update.StudentId);
+            var student = await _unitOfWork.StudentRepository.GetById(id);
             if (student == null)
             {
                 throw new NotFoundException("Student not found");

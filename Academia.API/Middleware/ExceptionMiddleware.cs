@@ -47,6 +47,10 @@ namespace Academia.API.Middleware
             {
                 await HandleExceptionAsync(context, ex, HttpStatusCode.BadRequest);
             }
+            catch (ForbiddenException ex)
+            {
+                await HandleExceptionAsync(context, ex, HttpStatusCode.Forbidden);
+            }
             catch (UnauthorizedAccessException ex)
             {
                 await HandleExceptionAsync( context,  ex,HttpStatusCode.Unauthorized);

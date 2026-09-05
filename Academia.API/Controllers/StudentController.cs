@@ -8,7 +8,7 @@ namespace Academia.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(Roles = "Admin,Employee")]
+    [Authorize(Roles = "Admin,Employee")]
     public class StudentController : ControllerBase
     {
         private readonly IStudentService _studentService;
@@ -38,16 +38,16 @@ namespace Academia.API.Controllers
 
         }
         [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>>Remove(int id)
+        public async Task<ActionResult>Remove(int id)
         {
-            var result = await _studentService.Remove(id);
-            return Ok(result);
+            await _studentService.Remove(id);
+            return NoContent();
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<ResponseStudent>> Update([FromRoute] int id,UpdateDTO updateStudent)
         {
-            id = updateStudent.StudentId;
+            updateStudent.StudentId = id;
             var student = await _studentService.Update(updateStudent);
             return Ok(student);
         }

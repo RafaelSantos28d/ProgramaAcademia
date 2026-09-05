@@ -40,10 +40,10 @@ namespace Academia.API.Controllers
             return Ok(enrollment);
         }
         [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>>Cancel([FromRoute]int id)
+        public async Task<ActionResult>Cancel([FromRoute]int id)
         {
-            var result = await _enrollmentService.Cancel(id);
-            return Ok(result);
+            await _enrollmentService.Cancel(id);
+            return NoContent();
         }
     }
 }

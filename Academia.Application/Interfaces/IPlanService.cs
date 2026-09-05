@@ -11,6 +11,6 @@ namespace Academia.Application.Interfaces
         Task<ResponsePlan> GetById(int id);
         Task<ResponsePlan> Create(CreatePlan createPlan);
         Task<bool> Remove(int id);
-        Task<ResponsePlan> Update(UpdatePlan updatePlan);
+        Task<ResponsePlan> Update(int id,UpdatePlan updatePlan);
     }
 }
