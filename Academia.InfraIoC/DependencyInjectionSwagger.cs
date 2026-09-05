@@ -15,6 +15,12 @@ namespace Academia.InfraIoC
             
             services.AddSwaggerGen(options =>
             {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Academia API",
+                    Version = "v1",
+                    Description = "API REST para gerenciamento de alunos, planos e matrículas."
+                });
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
