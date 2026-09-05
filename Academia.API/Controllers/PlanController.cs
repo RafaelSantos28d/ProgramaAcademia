@@ -45,8 +45,8 @@ namespace Academia.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<ResponsePlan>> Update([FromRoute]int id,UpdatePlan updatePlan)
         {
-            id = updatePlan.PlanId;
-            var update = await _planService.Update(updatePlan);
+            
+            var update = await _planService.Update(id,updatePlan);
             return Ok(update);
         }
     }
